@@ -4,7 +4,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <router-link to="/" class="navbar-brand">Movies APP</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,7 +47,7 @@
 <script>
 export default {
   name: 'App',
-}
+};
 </script>
 <style>
 #app {
@@ -57,4 +58,3 @@ export default {
   color: #2c3e50;
 }
 </style>
-  
