@@ -4,7 +4,6 @@
             Movie Results
         </div>
         <div class="card-body">
-            <!-- form control -->
             <div class="row mb-3">
                 <div class="col">
                     <div class="d-flex">
@@ -28,7 +27,6 @@
                     </div>
                 </div>
             </div>
-            <!-- form control -->
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div v-for="movie in movies" class="col" :key="movie._id">
                     <div class="card">
@@ -39,9 +37,9 @@
                                 Rating: {{ movie.rated }}
                             </p>
                             <p class="card-text">{{ movie.plot }}</p>
-                            <a class="btn btn-primary">
+                            <router-link :to="'/movie/' + movie._id" class="btn btn-primary">
                                 View Reviews
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -50,6 +48,8 @@
     </div>
 </template>
 <script>
+import MovieService from '../services/MovieService';
+
 export default {
     name: 'Movies',
     data() {
@@ -65,42 +65,27 @@ export default {
         this.getRatings();
     },
     methods: {
-        getMovies() {
-            this.movies = [
-                {
-                    _id: '3',
-                    title: 'Matrix',
-                    poster: 'https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg',
-                    rated: 'AG',
-                    plot: 'Best movie',
-                },
-                {
-                    _id: '4',
-                    title: 'Matrix 2',
-                    poster: 'https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg',
-                    rated: 'AG',
-                    plot: 'Best movie',
-                },
-                {
-                    _id: '5',
-                    title: 'Matrix 3',
-                    poster: 'https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg',
-                    rated: 'AG',
-                    plot: 'Best movie',
-                },
-            ];
+        async getMovies() {
+            const moviesData = await MovieService.getMovies();
+            this.movies = moviesData.movies;
         },
-        getRatings() {
-            this.ratings = ['AO', 'G', 'GP'];
+        async getRatings() {
+            this.ratings = await MovieService.getRatings();
         },
-        filterMovies(type) {
+        async filterMovies(type) {
+            let moviesData;
             if (type === 'title') {
-                console.log(this.titleToSearch);
+                moviesData = await MovieService.getMovies(
+                    this.titleToSearch, type,
+                );
             } else {
-                console.log(this.ratingToSearch);
+                moviesData = await MovieService.getMovies(
+                    this.ratingToSearch, type,
+                );
             }
+            this.movies = moviesData.movies;
         },
-    },
+    }
 };
 </script>
 <style scoped>
