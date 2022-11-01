@@ -4,8 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
         <router-link to="/" class="navbar-brand">Movies APP</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,9 +17,12 @@
             <router-link to="/about" class="nav-link active">
               About
             </router-link>
-            <router-link to="/login" class="nav-link active">
+            <router-link v-if="!userData" to="/login" class="nav-link active">
               Login
             </router-link>
+            <a v-if="userData" v-on:click="logout()" class="nav-link active pointer">
+              Logout ({{ userData }})
+            </a>
           </div>
         </div>
       </div>
@@ -47,6 +49,19 @@
 <script>
 export default {
   name: 'App',
+  computed: {
+    userData() {
+      if (this.$store.state.user.id) {
+        return `${this.$store.state.user.id} - ${this.$store.state.user.name}`
+      }
+      return '';
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.commit('disconnect');
+    },
+  },
 };
 </script>
 <style>
@@ -56,5 +71,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.pointer {
+  cursor: pointer;
 }
 </style>
