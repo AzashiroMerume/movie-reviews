@@ -30,7 +30,7 @@ const routes = [
     path: '/movie/:id',
     name: 'Movie',
     component: Movie,
-  }
+  },
 ];
 
 const router = createRouter({

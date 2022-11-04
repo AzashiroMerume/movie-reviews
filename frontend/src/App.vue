@@ -52,7 +52,7 @@ export default {
   computed: {
     userData() {
       if (this.$store.state.user.id) {
-        return `${this.$store.state.user.id} - ${this.$store.state.user.name}`
+        return `${this.$store.state.user.id} - ${this.$store.state.user.name}`;
       }
       return '';
     },

@@ -51,41 +51,37 @@
 import MovieService from '../services/MovieService';
 
 export default {
-    name: 'Movies',
-    data() {
-        return {
-            movies: [],
-            ratings: [],
-            titleToSearch: '',
-            ratingToSearch: '',
-        };
+  name: 'Movies',
+  data() {
+    return {
+      movies: [],
+      ratings: [],
+      titleToSearch: '',
+      ratingToSearch: '',
+    };
+  },
+  created() {
+    this.getMovies();
+    this.getRatings();
+  },
+  methods: {
+    async getMovies() {
+      const moviesData = await MovieService.getMovies();
+      this.movies = moviesData.movies;
     },
-    created() {
-        this.getMovies();
-        this.getRatings();
+    async getRatings() {
+      this.ratings = await MovieService.getRatings();
     },
-    methods: {
-        async getMovies() {
-            const moviesData = await MovieService.getMovies();
-            this.movies = moviesData.movies;
-        },
-        async getRatings() {
-            this.ratings = await MovieService.getRatings();
-        },
-        async filterMovies(type) {
-            let moviesData;
-            if (type === 'title') {
-                moviesData = await MovieService.getMovies(
-                    this.titleToSearch, type,
-                );
-            } else {
-                moviesData = await MovieService.getMovies(
-                    this.ratingToSearch, type,
-                );
-            }
-            this.movies = moviesData.movies;
-        },
-    }
+    async filterMovies(type) {
+      let moviesData;
+      if (type === 'title') {
+        moviesData = await MovieService.getMovies(this.titleToSearch, type);
+      } else {
+        moviesData = await MovieService.getMovies(this.ratingToSearch, type);
+      }
+      this.movies = moviesData.movies;
+    },
+  },
 };
 </script>
 <style scoped>

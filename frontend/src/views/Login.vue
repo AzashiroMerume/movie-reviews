@@ -30,22 +30,22 @@
 </template>
 <script>
 export default {
-    name: 'Login',
-    data() {
-        return {
-            userId: '',
-            userName: '',
-        };
+  name: 'Login',
+  data() {
+    return {
+      userId: '',
+      userName: '',
+    };
+  },
+  methods: {
+    login() {
+      if (!(this.userId === '' || this.userName === '')) {
+        this.$store.commit('connect', {
+          id: this.userId, name: this.userName,
+        });
+        this.$router.push({ path: '/' });
+      }
     },
-    methods: {
-        login() {
-            if (!(this.userId === '' || this.userName === '')) {
-                this.$store.commit('connect', {
-                    id: this.userId, name: this.userName,
-                });
-                this.$router.push({ path: '/' });
-            }
-        },
-    },
+  },
 };
 </script>
